@@ -1,0 +1,240 @@
+<?php
+/** @var \Zend\Form\View\Helper\FormHidden $this */
+/** @var \Zend\Paginator\Paginator $jobs */
+
+$this->headScript()
+    ->appendFile($this->basePath() . '/bookingmanager/js/booking-history.js');
+$this->headLink()
+    ->appendStylesheet($this->basePath() . "/bookingmanager/style/history.css");
+$jobs = $this->jobs;
+?>
+<div class="wrapper content">
+    <div class="tile_shadow"></div>
+    <div class="container">
+        <div class="search_container">
+            <?php
+            /** @var \SampleService\Form\FilterForm $form */
+            $form = $this->form;
+            $form->prepare();
+            $form->setAttribute('id', 'searchUsers');
+            ?>
+
+            <?= $this->form()->openTag($form); ?>
+            <h2>Search Users</h2>
+            <div class="row">
+                <div class="col-md-3 col-sm-6">
+                    <div class="form-group">
+                        <?= $this->formLabel($form->get('id')); ?>
+                        <?php
+                        $id = $form->get('id');
+                        $idValue = $id->getValue();
+                        $active = (empty($idValue) ? '' : 'active-filter-field');
+                        echo $this->formText(
+                            $id
+                                ->setAttribute('class', 'form-control light '.$active)
+                        ); ?>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-sm-12 pull-right submit">
+                    <?= $this->formSubmit(
+                        $form->get('search')->setAttribute('class', 'btn')
+                    ); ?>
+                </div>
+            </div>
+            <?= $this->form()->closeTag(); ?>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="wrapper content">
+<div class="container">
+<div class="table-responsive" id="searchResults">
+    <table class="table">
+        <thead>
+        <tr>
+            <th class="hidden-sm">
+                <?php
+                $options = $this->options;
+                if('id' == $this->options['order']) {
+                    // Invert the direction if it's already ordered.
+                    $options['direction'] = ($options['direction'] == 'ASC' ? 'DESC' : 'ASC');
+                    $icon = ($this->options['direction'] == 'DESC' ? "fa-caret-up" : "fa-caret-down");
+                } else {
+                    $icon = "";
+                    $options['order'] = 'id';
+                    $options['page'] = 1;
+                }
+                ?>
+                <a href="<?=$this->url('user-filter/filter', $options);?>">
+                    User #
+                    <?= (""===$icon ? "" : '<i class="fa '.$icon.'"></i>'); ?>
+                </a>
+            </th>
+            <th>
+                <?php
+                $options = $this->options;
+                if('passenger' == $this->options['order']) {
+                    // Invert the direction if it's already ordered.
+                    $options['direction'] = ($options['direction'] == 'ASC' ? 'DESC' : 'ASC');
+                    $icon = ($this->options['direction'] == 'DESC' ? "fa-caret-up" : "fa-caret-down");
+                } else {
+                    $icon = "";
+                    $options['order'] = 'passenger';
+                    $options['page'] = 1;
+                }
+
+                ?>
+                <a href="<?=$this->url('user-filter/filter', $options);?>">
+                    Passenger
+                    <?= (""===$icon ? "" : '<i class="fa '.$icon.'"></i>'); ?>
+                </a>
+            </th>
+            <th>
+                <?php
+                $options = $this->options;
+                if('pickup' == $this->options['order']) {
+                    // Invert the direction if it's already ordered.
+                    $options['direction'] = ($options['direction'] == 'ASC' ? 'DESC' : 'ASC');
+                    $icon = ($this->options['direction'] == 'DESC' ? "fa-caret-up" : "fa-caret-down");
+                } else {
+                    $icon = "";
+                    $options['order'] = 'pickup';
+                    $options['page'] = 1;
+                }
+                ?>
+                <a href="<?=$this->url('user-filter/filter', $options);?>">
+                    Pick-up Point
+                    <?= (""===$icon ? "" : '<i class="fa '.$icon.'"></i>'); ?>
+                </a>
+            </th>
+            <th>
+                <?php
+                $options = $this->options;
+                if('destination' == $this->options['order']) {
+                    // Invert the direction if it's already ordered.
+                    $options['direction'] = ($options['direction'] == 'ASC' ? 'DESC' : 'ASC');
+                    $icon = ($this->options['direction'] == 'DESC' ? "fa-caret-up" : "fa-caret-down");
+                } else {
+                    $icon = "";
+                    $options['order'] = 'destination';
+                    $options['page'] = 1;
+                }
+
+                ?>
+                <a href="<?=$this->url('user-filter/filter', $options);?>">
+                    Destination
+                    <?= (""===$icon ? "" : '<i class="fa '.$icon.'"></i>'); ?>
+                </a>
+            </th>
+            <th class="hidden-sm">
+                <?php
+                $options = $this->options;
+                if('date' == $this->options['order']) {
+                    // Invert the direction if it's already ordered.
+                    $options['direction'] = ($options['direction'] == 'ASC' ? 'DESC' : 'ASC');
+                    $icon = ($this->options['direction'] == 'DESC' ? "fa-caret-up" : "fa-caret-down");
+                } else {
+                    $icon = "";
+                    $options['order'] = 'date';
+                    $options['page'] = 1;
+                }
+
+                ?>
+                <a href="<?=$this->url('user-filter/filter', $options);?>">
+                    Date &amp; Time
+                    <?= (""===$icon ? "" : '<i class="fa '.$icon.'"></i>'); ?>
+                </a>
+            </th>
+            <th class="visible-sm"><i class="fa fa-calendar"></i> &amp; <i class="fa fa-clock-o"></i> <a href="#"><!-- <i class="fa fa-sort"></i> --></i></a></th>
+            <th>
+                <?php
+                $options = $this->options;
+                if('status' == $this->options['order']) {
+                    // Invert the direction if it's already ordered.
+                    $options['direction'] = ($options['direction'] == 'ASC' ? 'DESC' : 'ASC');
+                    $icon = ($this->options['direction'] == 'DESC' ? "fa-caret-up" : "fa-caret-down");
+                } else {
+                    $icon = "";
+                    $options['order'] = 'status';
+                    $options['page'] = 1;
+                }
+
+                ?>
+                <a href="<?=$this->url('user-filter/filter', $options);?>">
+                    Status
+                    <?= (""===$icon ? "" : '<i class="fa '.$icon.'"></i>'); ?>
+                </a>
+
+            </th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php
+        /** @var SampleService\Entity\User $user */
+        foreach($users as $user) { ?>
+            <tr>
+                <td class="hidden-sm"><?= $user->getId(); ?></td>
+                <td><?= $user->getFirstName() . " " .$user->getLastName(); ?></td>
+                <td class="actions nowrap">
+                    <a href="#" title="Single"><i class="fa fa-long-arrow-right icon-disabled"></i></a>
+                    <a href="#" title="Duplicate"><i class="fa fa-repeat icon-disabled"></i></a>
+                    <a href="#" title="Print"><i class="fa fa-print icon-disabled"></i></a>
+                    <a href="#" title="Edit"><i class="fa fa-pencil icon-disabled"></i></a>
+                    <a href="#" title="Remove"><i class="fa fa-times icon-disabled"></i></a>
+                </td>
+            </tr>
+        <?php } ?>
+        </tbody>
+    </table>
+</div>
+<div class="table_footer">
+    <div class="row">
+        <div class="col-sm-2 col-md-4 text-left">
+                    <span class="total_records">
+                        Total Records <span class="number"><?= $users->getTotalItemCount(); ?></span>
+                    </span>
+        </div>
+        <?php // add at the end of the file after the table
+        echo $this->paginationControl(
+            $users,
+            'sliding',
+            array('partial/filter-paginator.phtml', 'SampleService'),
+            array(
+                'route' => 'user-filter/filter'
+            )
+        );
+        ?>
+        <div class="col-sm-5 col-md-4 text-right">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <form action="" method="GET" id="booking-history-pagination">
+                        <label class="col-sm-7 col-md-8 text-right control-label" for="">No of Records per page</label>
+                        <div class="col-sm-5 col-md-4">
+                            <select class="form-control" name="perpage" id="booking-history-pagination-perpage">
+                                <?php
+                                $perpage = array(10, 20, 50, 100);
+                                $options = $this->options;
+                                foreach($perpage as $count) {
+                                    $options['perpage'] = $count;
+                                    $url = $this->url('user-filter/filter', $options);
+                                    ?>
+                                    <option value="<?=$count;?>" data-url="<?=$url;?>"><?=$count;?></option>
+                                <?php } // endforeach ?>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+
+        </div>
+    </div>
+</div>
+</div> <!-- /container -->
+</div> <!-- /content-wrapper -->
+

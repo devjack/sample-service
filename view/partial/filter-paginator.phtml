@@ -1,0 +1,40 @@
+<?php
+/** @var $this \Zend\View\Helper\PaginationControl*/
+?>
+<?php if($this->pageCount): ?>
+    <div class="col-sm-5 col-md-4 text-center">
+        <ul class="pagination">
+            <!-- Previous page -->
+            <?php if(isset($this->previous)): ?>
+                <li><a href="<?=$this->url($this->route);?>/<?= $this->previous; ?>">&laquo;</a></li>
+            <?php else: ?>
+                <li class="disabled"><a href="#">&laquo;</a></li>
+            <?php endif; ?>
+
+            <!-- Numbered links -->
+            <?php foreach($this->pagesInRange as $page): ?>
+                <?php if ($page != $this->current): ?>
+                    <li>
+                        <a href="<?php echo $this->url($this->route);?>/page,<?=$page;?>"><?= $page; ?>
+                            <span class="sr-only">(current)</span></a>
+                    </li>
+                <?php else: ?>
+                    <li class="active">
+                        <a href="<?php echo $this->url($this->route);?>/page,<?=$page;?>"> <?=$page;?> </a>
+                    </li>
+                <?php endif; ?>
+            <?php endforeach; ?>
+
+            <!-- next page -->
+
+            <!-- Next page link -->
+            <?php if (isset($this->next)): ?>
+                <li>
+                    <a href="<?php echo $this->url($this->route); ?>/page,<?php echo $this->next; ?>">&raquo;</a>
+                </li>
+            <?php else: ?>
+                <li><a href="#">&raquo;</a></li>
+            <?php endif; ?>
+        </ul>
+    </div>
+<?php endif; ?>
