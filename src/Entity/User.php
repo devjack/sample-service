@@ -88,6 +88,6 @@ class User {
         return $this->registered;
     }
 
-    
+
 
 }

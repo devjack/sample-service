@@ -22,6 +22,8 @@ class UserMapper extends AbstractMapper
     protected $validFilterKeys = array(
         'id',
         'name',
+        'email',
+        'registered'
     );
 
     protected $validOptionKeys = array(
@@ -149,9 +151,22 @@ class UserMapper extends AbstractMapper
             case 'id':
                 $select->order('id '.$direction);
                 break;
+            // Note that this is redundant since name isn't a valid sort field
             case 'name':
                 $alias = new Expression("CONCAT(User.FirstName, ' ', User.LastName) ".$direction);
                 $select->order($alias);
+                break;
+            case 'lastName':
+                $select->order('lastName '.$direction);
+                break;
+            case 'firstName':
+                $select->order('firstName '.$direction);
+                break;
+            case 'email':
+                $select->order('email '.$direction);
+                break;
+            case 'registered':
+                $select->order('registered '.$direction);
                 break;
         }
 
