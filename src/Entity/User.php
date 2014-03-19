@@ -5,6 +5,8 @@ class User {
     protected $id;
     protected $firstName;
     protected $lastName;
+    protected $email;
+    protected $registered;
 
     /**
      * @param mixed $firstName
@@ -54,5 +56,38 @@ class User {
         return $this->lastName;
     }
 
+    /**
+     * @param mixed $email
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param mixed $registered
+     */
+    public function setRegistered($registered)
+    {
+        $this->registered = $registered;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRegistered()
+    {
+        return $this->registered;
+    }
+
+    
 
 }

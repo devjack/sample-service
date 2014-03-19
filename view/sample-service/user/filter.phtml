@@ -79,7 +79,7 @@ $jobs = $this->jobs;
             <th>
                 <?php
                 $options = $this->options;
-                if('passenger' == $this->options['order']) {
+                if('firstName' == $this->options['order']) {
                     // Invert the direction if it's already ordered.
                     $options['direction'] = ($options['direction'] == 'ASC' ? 'DESC' : 'ASC');
                     $icon = ($this->options['direction'] == 'DESC' ? "fa-caret-up" : "fa-caret-down");
@@ -91,88 +91,66 @@ $jobs = $this->jobs;
 
                 ?>
                 <a href="<?=$this->url('user-filter/filter', $options);?>">
-                    Passenger
+                    First Name
                     <?= (""===$icon ? "" : '<i class="fa '.$icon.'"></i>'); ?>
                 </a>
             </th>
             <th>
                 <?php
                 $options = $this->options;
-                if('pickup' == $this->options['order']) {
+                if('lastName' == $this->options['order']) {
                     // Invert the direction if it's already ordered.
                     $options['direction'] = ($options['direction'] == 'ASC' ? 'DESC' : 'ASC');
                     $icon = ($this->options['direction'] == 'DESC' ? "fa-caret-up" : "fa-caret-down");
                 } else {
                     $icon = "";
-                    $options['order'] = 'pickup';
+                    $options['order'] = 'lastName';
                     $options['page'] = 1;
                 }
                 ?>
                 <a href="<?=$this->url('user-filter/filter', $options);?>">
-                    Pick-up Point
+                    LastName
                     <?= (""===$icon ? "" : '<i class="fa '.$icon.'"></i>'); ?>
                 </a>
             </th>
             <th>
                 <?php
                 $options = $this->options;
-                if('destination' == $this->options['order']) {
+                if('email' == $this->options['order']) {
                     // Invert the direction if it's already ordered.
                     $options['direction'] = ($options['direction'] == 'ASC' ? 'DESC' : 'ASC');
                     $icon = ($this->options['direction'] == 'DESC' ? "fa-caret-up" : "fa-caret-down");
                 } else {
                     $icon = "";
-                    $options['order'] = 'destination';
+                    $options['order'] = 'email';
                     $options['page'] = 1;
                 }
 
                 ?>
                 <a href="<?=$this->url('user-filter/filter', $options);?>">
-                    Destination
+                    Email
                     <?= (""===$icon ? "" : '<i class="fa '.$icon.'"></i>'); ?>
                 </a>
             </th>
             <th class="hidden-sm">
                 <?php
                 $options = $this->options;
-                if('date' == $this->options['order']) {
+                if('registered' == $this->options['order']) {
                     // Invert the direction if it's already ordered.
                     $options['direction'] = ($options['direction'] == 'ASC' ? 'DESC' : 'ASC');
                     $icon = ($this->options['direction'] == 'DESC' ? "fa-caret-up" : "fa-caret-down");
                 } else {
                     $icon = "";
-                    $options['order'] = 'date';
+                    $options['order'] = 'registered';
                     $options['page'] = 1;
                 }
 
                 ?>
                 <a href="<?=$this->url('user-filter/filter', $options);?>">
-                    Date &amp; Time
+                    Registered
                     <?= (""===$icon ? "" : '<i class="fa '.$icon.'"></i>'); ?>
                 </a>
             </th>
-            <th class="visible-sm"><i class="fa fa-calendar"></i> &amp; <i class="fa fa-clock-o"></i> <a href="#"><!-- <i class="fa fa-sort"></i> --></i></a></th>
-            <th>
-                <?php
-                $options = $this->options;
-                if('status' == $this->options['order']) {
-                    // Invert the direction if it's already ordered.
-                    $options['direction'] = ($options['direction'] == 'ASC' ? 'DESC' : 'ASC');
-                    $icon = ($this->options['direction'] == 'DESC' ? "fa-caret-up" : "fa-caret-down");
-                } else {
-                    $icon = "";
-                    $options['order'] = 'status';
-                    $options['page'] = 1;
-                }
-
-                ?>
-                <a href="<?=$this->url('user-filter/filter', $options);?>">
-                    Status
-                    <?= (""===$icon ? "" : '<i class="fa '.$icon.'"></i>'); ?>
-                </a>
-
-            </th>
-            <th>Action</th>
         </tr>
         </thead>
         <tbody>
@@ -181,7 +159,10 @@ $jobs = $this->jobs;
         foreach($users as $user) { ?>
             <tr>
                 <td class="hidden-sm"><?= $user->getId(); ?></td>
-                <td><?= $user->getFirstName() . " " .$user->getLastName(); ?></td>
+                <td><?= $user->getFirstName(); ?></td>
+                <td><?= $user->getLastName(); ?></td>
+                <td><?= $user->getEmail(); ?></td>
+                <td><?= $user->getRegistered(); ?></td>
                 <td class="actions nowrap">
                     <a href="#" title="Single"><i class="fa fa-long-arrow-right icon-disabled"></i></a>
                     <a href="#" title="Duplicate"><i class="fa fa-repeat icon-disabled"></i></a>
